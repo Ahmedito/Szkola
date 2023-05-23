@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="UIDesign">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="811b" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="32d73" class="javax.swing.JButton" binding="button1">
+            <constraints border-constraint="East"/>
+            <properties>
+              <text value="Ustawienia"/>
+            </properties>
+          </component>
+          <component id="c3e5e" class="javax.swing.JButton" binding="archiwizujButton" default-binding="true">
+            <constraints border-constraint="West"/>
+            <properties>
+              <text value="Archiwizuj"/>
+            </properties>
+          </component>
+          <grid id="d8658" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="5272c" class="javax.swing.JButton" binding="zapiszButton" default-binding="true">
+                <constraints border-constraint="West"/>
+                <properties>
+                  <text value="Zapisz"/>
+                </properties>
+              </component>
+              <component id="64e7d" class="javax.swing.JButton" binding="walidacjaButton" default-binding="true">
+                <constraints border-constraint="East"/>
+                <properties>
+                  <text value="Walidacja"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="4aea2" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="West"/>
+        <properties>
+          <preferredSize width="150" height="148"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="87d1f" class="javax.swing.JLabel">
+            <constraints border-constraint="North"/>
+            <properties>
+              <text value="Lista plików VHost"/>
+            </properties>
+          </component>
+          <scrollpane id="b46d6">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="88c7f" class="javax.swing.JList" binding="list1" default-binding="true">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+      <grid id="87dac" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <tabbedpane id="4ecdf" binding="tabbedPane1" default-binding="true">
+            <constraints border-constraint="North"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="4a004" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <tabbedpane title="Konfiguracja"/>
+                </constraints>
+                <properties/>
+                <border type="none" title="Nazwa pliku VHosta"/>
+                <children>
+                  <component id="342d3" class="javax.swing.JLabel">
+                    <constraints border-constraint="West"/>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="53bdc" class="javax.swing.JTextArea" binding="textArea2" default-binding="true">
+                    <constraints border-constraint="Center"/>
+                    <properties/>
+                  </component>
+                </children>
+              </grid>
+              <grid id="6b22a" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <tabbedpane title="Zawartość pliku"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="2ab57" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+                    <constraints border-constraint="East"/>
+                    <properties/>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </tabbedpane>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
