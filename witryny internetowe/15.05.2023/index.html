@@ -171,6 +171,7 @@
                 }
             }
         }
+        
         //dodawanie warstw
         function addLayer() {
             const newLayer = createLayer();
@@ -206,6 +207,34 @@
             removedLayer.remove();
 
             redrawLayers();
+        }
+
+        // rysowanie na canvasie 
+        let isDrawing = false;
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseleave', stopDrawing);
+
+        function startDrawing(event) {
+            isDrawing = true;
+            draw(event);
+        }
+
+        function draw(event) {
+            if (!isDrawing) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            ctx.fillStyle = 'purple';
+            ctx.fillRect(x, y, 5, 5);
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
         }
 
         redrawLayers();
