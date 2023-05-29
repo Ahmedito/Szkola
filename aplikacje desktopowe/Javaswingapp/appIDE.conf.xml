@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE preferences SYSTEM "http://java.sun.com/dtd/preferences.dtd">
+<preferences EXTERNAL_XML_VERSION="1.0">
+  <root type="user">
+    <map/>
+    <node name="appIDE">
+      <map>
+        <entry key="jezykInterfejsu" value="Polish"/>
+        <entry key="odpietypaseknarzedziowy" value="false"/>
+        <entry key="trybciemny" value="false"/>
+        <entry key="ukryjmenuglowne" value="false"/>
+        <entry key="uruchomWysrodkowane" value="false"/>
+        <entry key="uruchomZmaksymalizowane" value="true"/>
+        <entry key="zablokujpaseknarzedziowy" value="false"/>
+        <entry key="zapametajotwartepliki" value="false"/>
+        <entry key="zapamietajPozycje" value="false"/>
+        <entry key="zapamietajRozmiar" value="false"/>
+        <entry key="zapamietajkatalogprzegladania" value="false"/>
+      </map>
+    </node>
+  </root>
+</preferences>
