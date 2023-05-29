@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Szachownica</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container img {
+            max-width: 50%;
+            max-height: 80px;
+            margin-left: 20px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .controls button,
+        .controls label {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        <img id="rightImage" src="/ll1.webp" alt="Zdjęcie">
+    </div>
+    
+    <div class="controls">
+        <div>
+            //przyciski do usuwania warstw
+            <button id="addLayerButton">Dodaj nową warstwę</button>
+            <button id="removeLayerButton">Usuń warstwę</button>
+        </div>
+        <div id="checkboxContainer"></div>
+    </div>
+
+    <script>
+        //robienie canvasu
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const width = 800;
+        const height = 600;
+
+        canvas.width = width;
+        canvas.height = height;
+        
+        const layers = [
+            createLayer(),
+            createLayer(),
+            createLayer()
+        ];
+
+        // Funkcja tworząca warstwę
+        function createLayer() {
+            const layer = document.createElement('canvas');
+            layer.width = width;
+            layer.height = height;
+            return layer;
+        }
+
+        // Funkcja rysująca na jakiejś warstwie
+        function drawOnLayer(layer, drawFn) {
+            const ctx = layer.getContext('2d');
+            ctx.clearRect(0, 0, width, height);
+            drawFn(ctx);
+        }
+
+        // Rysowanie szachownicy na pierwszej warstwie
+        drawOnLayer(layers[0], (ctx) => {
+            const squareSize = Math.min(width, height) / 3;
+
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if ((i + j) % 2 === 0) {
+                        ctx.fillStyle = 'black';
+                    } else {
+                        ctx.fillStyle = 'yellow';
+                    }
+                    ctx.fillRect(j * squareSize, i * squareSize, squareSize, squareSize);
+                }
+            }
+        });
+
+        // Rysowanie kółka i krzyżyka na drugiej warstwie
+        drawOnLayer(layers[1], (ctx) => {
+            const squareSize = Math.min(width, height) / 3;
+            const centerX = squareSize * 2.5;
+            const centerY = squareSize * 0.5;
+            const radius = squareSize * 0.4;
+            const xStart = squareSize * 0.3;
+            const yStart = squareSize * 0.3;
+            const xEnd = squareSize * 0.7;
+            const yEnd = squareSize * 0.7;
+
+            ctx.fillStyle = 'black';
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 5;
+
+            // Rysowanie kółeczka
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            // Rysowanie X
+            ctx.beginPath();
+            ctx.moveTo(xStart, yStart);
+            ctx.lineTo(xEnd, yEnd);
+            ctx.moveTo(xStart, yEnd);
+            ctx.lineTo(xEnd, yStart);
+            ctx.stroke();
+        });
+
+        // Rysowanie obrazka na trzeciej warstwie
+        drawOnLayer(layers[2], (ctx) => {
+            const img = document.getElementById('rightImage');
+            const imgWidth = 100;
+            const imgHeight = 100;
+            const imgX = (width - imgWidth) / 1.07;
+            const imgY = (height - imgHeight) / 2;
+            ctx.drawImage(img, imgX, imgY, imgWidth, imgHeight);
+        });
+
+        // Wyświetlanie i ukrywanie warstw na podstawie zaznaczonych checkboxów
+        const layerCheckboxes = [];
+        const checkboxContainer = document.getElementById('checkboxContainer');
+
+        for (let i = 0; i < layers.length; i++) {
+            const layerCheckbox = document.createElement('input');
+            layerCheckbox.type = 'checkbox';
+            layerCheckbox.checked = true;
+            layerCheckbox.addEventListener('change', toggleLayer.bind(null, i));
+            layerCheckboxes.push(layerCheckbox);
+
+            const layerLabel = document.createElement('label');
+            layerLabel.textContent = `Layer ${i + 1}`;
+
+            checkboxContainer.appendChild(layerCheckbox);
+            checkboxContainer.appendChild(layerLabel);
+        }
+
+        function toggleLayer(layerIndex, event) {
+            const layerCheckbox = layerCheckboxes[layerIndex];
+            const layer = layers[layerIndex];
+            layer.style.display = event.target.checked ? 'block' : 'none';
+            layerCheckbox.checked = event.target.checked;
+            redrawLayers();
+        }
+
+        function redrawLayers() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < layers.length; i++) {
+                if (layerCheckboxes[i].checked) {
+                    ctx.drawImage(layers[i], 0, 0);
+                }
+            }
+        }
+        //dodawanie warstw
+        function addLayer() {
+            const newLayer = createLayer();
+            layers.push(newLayer);
+            const layerIndex = layers.length - 1;
+
+            const layerCheckbox = document.createElement('input');
+            layerCheckbox.type = 'checkbox';
+            layerCheckbox.checked = true;
+            layerCheckbox.addEventListener('change', toggleLayer.bind(null, layerIndex));
+            layerCheckboxes.push(layerCheckbox);
+
+            const layerLabel = document.createElement('label');
+            layerLabel.textContent = `Layer ${layerIndex + 1}`;
+
+            checkboxContainer.appendChild(layerCheckbox);
+            checkboxContainer.appendChild(layerLabel);
+
+            redrawLayers();
+        }
+
+        function removeLayer() {
+            if (layers.length <= 1) {
+                alert("Nie można usunąć ostatniej warstwy koleżko");
+                return;
+            }
+
+            const removedLayer = layers.pop();
+            layerCheckboxes.pop();
+            checkboxContainer.removeChild(checkboxContainer.lastChild); 
+            checkboxContainer.removeChild(checkboxContainer.lastChild); 
+
+            removedLayer.remove();
+
+            redrawLayers();
+        }
+
+        redrawLayers();
+
+        // Usuwanie zdjęcia brzydkiego po prawej
+        const rightImage = document.getElementById('rightImage');
+        rightImage.remove();
+
+        // Dodawanie obsługi kliknięcia przycisków
+        const addLayerButton = document.getElementById('addLayerButton');
+        addLayerButton.addEventListener('click', addLayer);
+
+        const removeLayerButton = document.getElementById('removeLayerButton');
+        removeLayerButton.addEventListener('click', removeLayer);
+    </script>
+</body>
+</html>
